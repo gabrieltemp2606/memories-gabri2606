@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 Anos Juntos 💛</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Lato:wght@300;400&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --rose: #c97b84;
+            --rose-light: #f2dde0;
+            --rose-dark: #7a3a42;
+            --cream: #fdf8f2;
+            --warm: #e8d9c8;
+            --gold: #b8975a;
+            --text: #3a2e28;
+            --text-soft: #7a6a60;
+        }
+
+        body {
+            background: var(--cream);
+            color: var(--text);
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            background: #1a1210;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        #intro-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .intro-hearts {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .heart {
+            width: 14px;
+            height: 14px;
+            background: var(--rose);
+            clip-path: polygon(50% 85%, 0% 35%, 15% 0%, 50% 25%, 85% 0%, 100% 35%);
+            animation: pulse 1.4s ease-in-out infinite;
+        }
+
+        .heart:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .heart:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.3)
+            }
+        }
+
+        .intro-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            color: #f5ede6;
+            text-align: center;
+            line-height: 1.3;
+            letter-spacing: 0.02em;
+        }
+
+        .intro-sub {
+            color: var(--rose);
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 0.8rem;
+            font-weight: 400;
+        }
+
+        #btn-start {
+            margin-top: 2.5rem;
+            padding: 0.9rem 2.8rem;
+            background: transparent;
+            border: 1px solid var(--rose);
+            color: var(--rose-light);
+            font-family: 'Lato', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        #btn-start:hover {
+            background: var(--rose);
+            color: #fff;
+        }
+
+        #main {
+            opacity: 0;
+            transition: opacity 1s ease;
+            min-height: 100vh;
+        }
+
+        #main.visible {
+            opacity: 1;
+        }
+
+        #counter-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(253, 248, 242, 0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--warm);
+            padding: 0.6rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            z-index: 50;
+        }
+
+        .counter-unit {
+            text-align: center;
+        }
+
+        .counter-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--rose-dark);
+            display: block;
+            line-height: 1;
+        }
+
+        .counter-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            font-weight: 400;
+        }
+
+        .counter-sep {
+            color: var(--rose);
+            font-size: 1.2rem;
+            align-self: center;
+            opacity: 0.5;
+        }
+
+        #slide-area {
+            padding-top: 70px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            max-width: 680px;
+            width: 100%;
+            padding: 2rem 1.5rem 3rem;
+            animation: fadeSlide 0.8s ease forwards;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-num {
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 1.2rem;
+        }
+
+        .slide-photo-wrap {
+            width: 100%;
+            max-width: 520px;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border-radius: 4px;
+            border: 6px solid #fff;
+            box-shadow: 0 4px 28px rgba(100, 60, 50, 0.13);
+            position: relative;
+        }
+
+        .slide-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide-photo-wrap::after {
+            content: attr(data-fallback);
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            background: var(--rose-light);
+            opacity: 0;
+        }
+
+        .slide-photo-wrap.no-img::after {
+            opacity: 1;
+        }
+
+        .slide-date {
+            margin-top: 1.4rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .slide-desc {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.4vw, 1.18rem);
+            line-height: 1.8;
+            text-align: center;
+            color: var(--text);
+            max-width: 480px;
+            margin-top: 1rem;
+        }
+
+        .ornament {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 1.5rem 0;
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .ornament span {
+            flex: 1;
+            height: 1px;
+            background: var(--warm);
+        }
+
+        .ornament i {
+            color: var(--rose);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        #btn-next {
+            margin-top: 0.5rem;
+            padding: 0.85rem 3rem;
+            background: var(--rose);
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.15s;
+        }
+
+        #btn-next:hover {
+            background: var(--rose-dark);
+        }
+
+        #btn-next:active {
+            transform: scale(0.97);
+        }
+
+        #btn-next:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+
+        #progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--warm);
+            z-index: 50;
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: var(--rose);
+            transition: width 0.5s ease;
+        }
+
+        .slide-video-wrap {
+            width: 100%;
+            max-width: 560px;
+            aspect-ratio: 16/9;
+            background: #111;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 6px solid #fff;
+            box-shadow: 0 4px 28px rgba(100, 60, 50, 0.15);
+        }
+
+        .slide-video-wrap video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #letter-screen {
+            display: none;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 1.5rem 3rem;
+            background: var(--cream);
+            animation: fadeSlide 1.2s ease forwards;
+        }
+
+        #letter-screen.show {
+            display: flex;
+        }
+
+        .letter-paper {
+            max-width: 640px;
+            width: 100%;
+            background: #fff;
+            border: 1px solid var(--warm);
+            border-radius: 4px;
+            padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem);
+            position: relative;
+        }
+
+        .letter-paper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 2.5rem;
+            right: 2.5rem;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--rose), transparent);
+            opacity: 0.5;
+        }
+
+        .letter-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .letter-eyebrow::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--warm);
+        }
+
+        .letter-salutation {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            margin-bottom: 1.5rem;
+            color: var(--rose-dark);
+        }
+
+        .letter-body {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(0.95rem, 2vw, 1.08rem);
+            line-height: 2;
+            color: var(--text);
+            white-space: pre-line;
+        }
+
+        .letter-sign {
+            margin-top: 2.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            color: var(--rose-dark);
+            font-style: italic;
+        }
+
+        .letter-hearts {
+            margin-top: 2rem;
+            display: flex;
+            gap: 8px;
+        }
+
+        .lh {
+            width: 12px;
+            height: 12px;
+            background: var(--rose);
+            clip-path: polygon(50% 85%, 0% 35%, 15% 0%, 50% 25%, 85% 0%, 100% 35%);
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        .lh:nth-child(2) {
+            animation-delay: .25s;
+        }
+
+        .lh:nth-child(3) {
+            animation-delay: .5s;
+        }
+
+        .petals-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 200;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            top: -20px;
+            width: 10px;
+            height: 14px;
+            background: var(--rose-light);
+            border-radius: 50% 0 50% 0;
+            opacity: 0;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 0.8;
+                transform: translateY(0) rotate(0deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            #counter-bar {
+                gap: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .counter-num {
+                font-size: 1.15rem;
+            }
+
+            .counter-label {
+                font-size: 0.58rem;
+            }
+
+            .counter-sep {
+                font-size: 0.9rem;
+            }
+
+            #slide-area {
+                padding-top: 60px;
+            }
+
+            .slide {
+                padding: 1.2rem 1rem 2.5rem;
+            }
+
+            .slide-photo-wrap {
+                border-width: 4px;
+            }
+
+            .slide-desc {
+                font-size: 1rem;
+            }
+
+            #btn-next {
+                width: 100%;
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .letter-paper {
+                padding: 1.8rem 1.2rem;
+            }
+
+            .letter-body {
+                font-size: 0.97rem;
+                line-height: 1.9;
+            }
+
+            .intro-title {
+                font-size: 1.8rem;
+            }
+
+            #btn-start {
+                padding: 0.85rem 2rem;
+            }
+
+            .slide-video-wrap {
+                border-width: 4px;
+            }
+        }
+
+        #music-badge {
+            position: fixed;
+            bottom: 12px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--warm);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            color: var(--text-soft);
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 60;
+            backdrop-filter: blur(6px);
+            transition: opacity 0.5s;
+        }
+
+        #music-badge.hidden {
+            opacity: 0;
+        }
+
+        .note-icon {
+            animation: noteBounce 1.2s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes noteBounce {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-3px)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="petals-container" id="petals"></div>
+
+    <div id="intro-screen">
+        <div class="intro-hearts">
+            <div class="heart"></div>
+            <div class="heart"></div>
+            <div class="heart"></div>
+        </div>
+        <h1 class="intro-title">5 anos juntos</h1>
+        <p class="intro-sub">uma história em fotos para nós!</p>
+        <button id="btn-start">Começar ♡</button>
+    </div>
+
+    <div id="main">
+
+        <div id="counter-bar">
+            <div class="counter-unit">
+                <span class="counter-num" id="c-years">0</span>
+                <span class="counter-label">Anos</span>
+            </div>
+            <div class="counter-sep">·</div>
+            <div class="counter-unit">
+                <span class="counter-num" id="c-months">0</span>
+                <span class="counter-label">Meses</span>
+            </div>
+            <div class="counter-sep">·</div>
+            <div class="counter-unit">
+                <span class="counter-num" id="c-days">0</span>
+                <span class="counter-label">Dias</span>
+            </div>
+        </div>
+
+        <div id="slide-area">
+
+            <div class="slide active" id="slide-0">
+                <p class="slide-num">01 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto1.jpg não encontrada">
+                    <img src="fotos/foto1.jpg" alt="Nossa primeira foto juntos">
+                </div>
+                <p class="slide-date">31/07/2021</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela mulher extraordinária que você é, pela forma como ama e sonha...</p>
+            </div>
+
+            <div class="slide" id="slide-1">
+                <p class="slide-num">02 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto2.jpg não encontrada">
+                    <img src="fotos/foto2.jpg" alt="Foto 2">
+                </div>
+                <p class="slide-date">19/12/2021</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela coragem com que enfrenta a vida, mesmo quando ninguém vê o peso que você carrega...</p>
+            </div>
+
+            <div class="slide" id="slide-2">
+                <p class="slide-num">03 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto3.jpg não encontrada">
+                    <img src="fotos/foto3.jpg" alt="Foto 3">
+                </div>
+                <p class="slide-date">22/01/2022</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela leveza que você leva aos lugares e pela paz que faz nascer em quem está ao seu lado...</p>
+            </div>
+
+            <div class="slide" id="slide-3">
+                <p class="slide-num">04 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto4.jpg não encontrada">
+                    <img src="fotos/foto4.jpg" alt="Foto 4">
+                </div>
+                <p class="slide-date">30/04/2022</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pelo seu sorriso que sempre encontra um jeito de iluminar os meus dias...</p>
+            </div>
+
+            <div class="slide" id="slide-4">
+                <p class="slide-num">05 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto5.jpg não encontrada">
+                    <img src="fotos/foto5.jpg" alt="Foto 5">
+                </div>
+                <p class="slide-date">09/07/2022</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela bondade que existe no seu coração e pelo carinho que você dedica às pessoas que ama...</p>
+            </div>
+
+            <div class="slide" id="slide-5">
+                <p class="slide-num">06 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto6.jpg não encontrada">
+                    <img src="fotos/foto6.jpg" alt="Foto 6">
+                </div>
+                <p class="slide-date">13/08/2022</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela curiosidade que te faz querer descobrir o mundo e por nunca deixar de crescer...</p>
+            </div>
+
+            <div class="slide" id="slide-6">
+                <p class="slide-num">07 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto7.jpg não encontrada">
+                    <img src="fotos/foto7.jpg" alt="Foto 7">
+                </div>
+                <p class="slide-date">06/01/2023</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">por você transformar momentos simples em lembranças que quero guardar para sempre...</p>
+            </div>
+
+            <div class="slide" id="slide-7">
+                <p class="slide-num">08 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto8.jpg não encontrada">
+                    <img src="fotos/foto8.jpg" alt="Foto 8">
+                </div>
+                <p class="slide-date">01/05/2023</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela força que existe na sua delicadeza e pela delicadeza que existe na sua força...</p>
+            </div>
+
+            <div class="slide" id="slide-8">
+                <p class="slide-num">09 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto9.jpg não encontrada">
+                    <img src="fotos/foto9.jpg" alt="Foto 9">
+                </div>
+                <p class="slide-date">10/06/2023</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela sua presença e como ela faz qualquer lugar parecer um lar...</p>
+            </div>
+
+            <div class="slide" id="slide-9">
+                <p class="slide-num">10 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto10.jpg não encontrada">
+                    <img src="fotos/foto10.jpg" alt="Foto 10">
+                </div>
+                <p class="slide-date">17/06/2023</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela mulher que você escolhe ser todos os dias, sempre fiel aos seus valores...</p>
+            </div>
+
+            <div class="slide" id="slide-10">
+                <p class="slide-num">11 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto11.jpg não encontrada">
+                    <img src="fotos/foto11.jpg" alt="Foto 11">
+                </div>
+                <p class="slide-date">19/01/2024</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">por você me mostrar, sem perceber, que o amor mora nos pequenos gestos...</p>
+            </div>
+
+            <div class="slide" id="slide-11">
+                <p class="slide-num">12 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto12.jpg não encontrada">
+                    <img src="fotos/foto12.jpg" alt="Foto 12">
+                </div>
+                <p class="slide-date">16/11/2024</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela maneira como você vive sem deixar de cuidar de quem está ao seu redor...</p>
+            </div>
+
+            <div class="slide" id="slide-12">
+                <p class="slide-num">13 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto13.jpg não encontrada">
+                    <img src="fotos/foto13.jpg" alt="Foto 13">
+                </div>
+                <p class="slide-date">02/01/2025</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">pela admiração que tenho por sua essência, muito mais do que qualquer qualidade que eu possa listar...</p>
+            </div>
+
+            <div class="slide" id="slide-13">
+                <p class="slide-num">14 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto14.jpg não encontrada">
+                    <img src="fotos/foto14.jpg" alt="Foto 14">
+                </div>
+                <p class="slide-date">11/01/2025</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">por tudo o que construímos juntos e por tudo o que ainda vamos construir...</p>
+            </div>
+
+            <div class="slide" id="slide-14">
+                <p class="slide-num">15 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto15.jpg não encontrada">
+                    <img src="fotos/foto15.jpg" alt="Foto 15">
+                </div>
+                <p class="slide-date">15/05/2025</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">porque, mesmo depois de todos esses anos, continuo descobrindo novos motivos para te admirar...</p>
+            </div>
+
+            <div class="slide" id="slide-15">
+                <p class="slide-num">16 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto16.jpg não encontrada">
+                    <img src="fotos/foto16.jpg" alt="Foto 16">
+                </div>
+                <p class="slide-date">27/12/2025</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">porque, quando penso no futuro, é impossível imaginá-lo sem você caminhando ao meu lado...</p>
+            </div>
+
+            <div class="slide" id="slide-16">
+                <p class="slide-num">17 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto17.jpg não encontrada">
+                    <img src="fotos/foto17.jpg" alt="Foto 17">
+                </div>
+                <p class="slide-date">30/12/2025</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">porque, do seu lado, tenho um milhão de motivos para acreditar no amor...</p>
+            </div>
+
+            <div class="slide" id="slide-17">
+                <p class="slide-num">18 / 18</p>
+                <div class="slide-photo-wrap" data-fallback="foto18.jpg não encontrada">
+                    <img src="fotos/foto18.jpg" alt="Foto 18">
+                </div>
+                <p class="slide-date">08/03/2026</p>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc">porque eu te amo. Simples assim.</p>
+            </div>
+
+            <div class="slide" id="slide-video">
+                <p class="slide-num">e tem mais…</p>
+                <div class="slide-video-wrap">
+                    <video id="main-video" controls>
+                        <source src="fotos/video.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="ornament"><span></span><i>♡</i><span></span></div>
+                <p class="slide-desc" style="font-size:0.95rem;">Este momento também merecia estar aqui.</p>
+            </div>
+
+            <button id="btn-next">Próxima memória →</button>
+
+        </div>
+        <div id="letter-screen">
+            <div class="letter-paper">
+                <p class="letter-eyebrow">Carta para você</p>
+                <p class="letter-salutation">Honey,</p>
+
+                <p class="letter-body" id="letter-text">
+                    Depois de cinco anos ao seu lado, uma coisa nunca mudou: a admiração que sinto por você.
+
+                    Eu admiro sua força, seu coração, sua vontade de conhecer o mundo e viver tudo o que a vida pode oferecer. Admiro a mulher que você se tornou e a forma como enxerga a vida.
+
+                    Com você eu aprendi que o amor está nas pequenas coisas. 
+                    E se existe algo que eu quero que você saiba é que eu continuo te escolhendo. 
+                    Não por costume. 
+                    Não pelo tempo que passamos juntos. 
+                    Não pelas memórias que construímos.
+                    Eu te escolho porque continuo admirando quem você é.
+                    Te escolho porque, mesmo depois de todos esses anos, ainda encontro em você alguém capaz de me inspirar a ser melhor.
+                    E acima de tudo isso, eu te amo pela mulher extraordinária que você é, pela forma como ama e sonha.
+                    Eu te amo por tudo que construímos juntos.
+                    Eu te amo porque, do seu lado, tenho um milhão de motivos para acreditar no amor.
+
+                    Feliz 5 anos.
+                </p>
+
+                <p class="letter-sign">— Com amor, Gabriel ♡</p>
+                <div class="letter-hearts">
+                    <div class="lh"></div>
+                    <div class="lh"></div>
+                    <div class="lh"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="progress-bar">
+        <div id="progress-fill" style="width:0%"></div>
+    </div>
+
+    <div id="music-badge" class="hidden">
+        <span class="note-icon">♪</span>
+        <span id="music-name">Tocando música...</span>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="fotos/musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const TOTAL_PHOTO_SLIDES = 18;
+        const START_DATE = new Date('2021-06-26'); // 
+
+        const music = document.getElementById('bg-music');
+        const musicBadge = document.getElementById('music-badge');
+        const musicName = document.getElementById('music-name');
+        const video = document.getElementById('main-video');
+        const btnNext = document.getElementById('btn-next');
+        const progressFill = document.getElementById('progress-fill');
+        const letterScreen = document.getElementById('letter-screen');
+        const slideArea = document.getElementById('slide-area');
+
+        let currentSlide = 0;
+        const totalSlides = TOTAL_PHOTO_SLIDES + 1; 
+        let videoAvailable = false;
+
+        const videoSrc = video.querySelector('source') ? video.querySelector('source').src : video.src;
+        fetch(videoSrc, { method: 'HEAD' })
+            .then(res => { videoAvailable = res.ok; })
+            .catch(() => { videoAvailable = false; });
+
+        function updateCounter() {
+            const now = new Date();
+            let years = now.getFullYear() - START_DATE.getFullYear();
+            let months = now.getMonth() - START_DATE.getMonth();
+            let days = now.getDate() - START_DATE.getDate();
+            if (days < 0) { months--; days += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+            if (months < 0) { years--; months += 12; }
+            document.getElementById('c-years').textContent = years;
+            document.getElementById('c-months').textContent = months;
+            document.getElementById('c-days').textContent = days;
+        }
+        updateCounter();
+        setInterval(updateCounter, 60000);
+
+        function spawnPetal() {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            p.style.left = Math.random() * 100 + 'vw';
+            const dur = 4 + Math.random() * 5;
+            p.style.animation = `fall ${dur}s linear forwards`;
+            p.style.transform = `rotate(${Math.random() * 360}deg)`;
+            document.getElementById('petals').appendChild(p);
+            setTimeout(() => p.remove(), dur * 1000);
+        }
+        let petalInterval = null;
+        function startPetals() { petalInterval = setInterval(spawnPetal, 600); }
+        function stopPetals() { clearInterval(petalInterval); }
+
+        document.getElementById('btn-start').addEventListener('click', () => {
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('main').classList.add('visible');
+            music.volume = 0.45;
+            music.play().catch(() => { });
+            musicName.textContent = 'Nossa música ♡';
+            musicBadge.classList.remove('hidden');
+            startPetals();
+            updateProgress();
+        });
+
+        function showSlide(idx) {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+
+            if (idx < TOTAL_PHOTO_SLIDES) {
+                document.getElementById('slide-' + idx).classList.add('active');
+                const isLast = idx === TOTAL_PHOTO_SLIDES - 1;
+                btnNext.textContent = !isLast ? 'Próxima memória →' : (videoAvailable ? 'Ver vídeo ▶' : 'Ver carta ♡');
+                btnNext.style.display = '';
+                btnNext.disabled = false;
+            } else {
+                if (videoAvailable) {
+                    showVideoSlide();
+                } else {
+                    goToLetter();
+                }
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showVideoSlide() {
+            document.getElementById('slide-video').classList.add('active');
+            btnNext.style.display = 'none';
+            video.addEventListener('play', () => {
+                music.pause();
+                musicBadge.classList.add('hidden');
+                stopPetals();
+            }, { once: true });
+            video.addEventListener('ended', goToLetter, { once: true });
+        }
+
+        function goToLetter() {
+            slideArea.style.opacity = '0';
+            slideArea.style.transition = 'opacity 1.2s ease';
+            setTimeout(() => {
+                slideArea.style.display = 'none';
+                letterScreen.classList.add('show');
+                startPetals();
+            }, 1200);
+        }
+
+        function updateProgress() {
+            const pct = (currentSlide / (totalSlides - 1)) * 100;
+            progressFill.style.width = Math.min(pct, 100) + '%';
+        }
+
+        btnNext.addEventListener('click', () => {
+            currentSlide++;
+            showSlide(currentSlide);
+            updateProgress();
+        });
+
+        function preload(idx) {
+            if (idx < TOTAL_PHOTO_SLIDES) {
+                const img = new Image();
+                img.src = 'fotos/foto' + (idx + 1) + '.jpg';
+            }
+        }
+        preload(1);
+
+        document.querySelectorAll('.slide-photo-wrap img').forEach(img => {
+            img.addEventListener('error', () => img.parentElement.classList.add('no-img'));
+        });
+    </script>
+</body>
+
+</html>
